@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RețeteSmart - Planuri Alimentare cu AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">🍽️</span>
+                <span class="logo-text">Rețete<span class="logo-accent">Smart</span></span>
+            </a>
+            <nav class="nav">
+                <a href="#retete" class="nav-link active">Rețete</a>
+                <a href="#planuri" class="nav-link">Planuri</a>
+                <a href="#lista" class="nav-link">Lista</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Mâncarea perfectă,<br><span class="gradient-text">zilnic</span></h1>
+            <p class="hero-subtitle">Planuri alimentare personalizate, generate de AI. Rețete delicioase, liste de cumpărături automate.</p>
+            <div class="hero-actions">
+                <a href="#retete" class="btn btn-primary">Descoperă Rețete</a>
+                <a href="#planuri" class="btn btn-secondary">Creează Plan</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">500+</span>
+                    <span class="stat-label">Rețete</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">15K+</span>
+                    <span class="stat-label">Utilizatori</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">4.9★</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories" id="retete">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explorează Rețete</h2>
+                <p class="section-subtitle">Găsește mâncarea perfectă pentru orice moment al zilei</p>
+            </div>
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">
+                    <span class="filter-icon">✨</span> Toate
+                </button>
+                <button class="filter-btn" data-category="mic-dejun">
+                    <span class="filter-icon">🌅</span> Mic Dejun
+                </button>
+                <button class="filter-btn" data-category="pranz">
+                    <span class="filter-icon">☀️</span> Prânz
+                </button>
+                <button class="filter-btn" data-category="cina">
+                    <span class="filter-icon">🌙</span> Cină
+                </button>
+                <button class="filter-btn" data-category="desert">
+                    <span class="filter-icon">🍰</span> Desert
+                </button>
+            </div>
+            <div class="recipes-grid" id="recipesGrid">
+                <!-- Recipes loaded via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Modal -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-body" id="modalBody">
+                <!-- Recipe details loaded via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping List -->
+    <section class="shopping-section" id="lista">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Lista de Cumpărături</h2>
+                <p class="section-subtitle">Ai toate ingredientele la îndemână</p>
+            </div>
+            <div class="shopping-wrapper">
+                <div class="shopping-list-container">
+                    <div class="shopping-list" id="shoppingList">
+                        <div class="empty-state" id="emptyState">
+                            <span class="empty-icon">🛒</span>
+                            <p>Lista ta e goală</p>
+                            <span class="empty-hint">Adaugă ingrediente din rețete</span>
+                        </div>
+                    </div>
+                    <div class="shopping-actions">
+                        <button class="btn btn-sm btn-outline" id="clearChecked">Șterge Bifate</button>
+                        <button class="btn btn-sm btn-danger" id="clearAll">Golește Tot</button>
+                    </div>
+                </div>
+                <div class="shopping-summary">
+                    <div class="summary-card">
+                        <h3>Rezumat</h3>
+                        <div class="summary-stats">
+                            <div class="summary-stat">
+                                <span class="summary-value" id="totalItems">0</span>
+                                <span class="summary-label">Total</span>
+                            </div>
+                            <div class="summary-stat">
+                                <span class="summary-value" id="checkedItems">0</span>
+                                <span class="summary-label">Bifate</span>
+                            </div>
+                            <div class="summary-stat">
+                                <span class="summary-value" id="remainingItems">0</span>
+                                <span class="summary-label">Rămase</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <div class="ecom-card">
+                        <h3>📦 Livrare Rapidă</h3>
+                        <p>Comandă ingredientele direct din listă</p>
+                        <button class="btn btn-primary btn-block" id="orderBtn">
+                            Comandă de la Parteneri
+                        </button>
+                        <span class="ecom-note">+ Comision mic pentru noi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="planuri">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Planuri de Abonament</h2>
+                <p class="section-subtitle">Alege planul perfect pentru tine</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <span class="pricing-badge">Gratis</span>
+                        <div class="pricing-price">0 <span>lei/lună</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 10 rețete/lună</li>
+                        <li>✓ Lista de cumpărături</li>
+                        <li>✗ Planuri personalizate AI</li>
+                        <li>✗ Livrare ingredient</li>
+                    </ul>
+                    <button class="btn btn-outline btn-block">Începe Gratuit</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <span class="pricing-badge">Popular</span>
+                        <div class="pricing-price">25 <span>lei/lună</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Rețete nelimitate</li>
+                        <li>✓ Planuri AI personalizate</li>
+                        <li>✓ Livrare prioritară</li>
+                        <li>✓ Istoric complet</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block">Alege Acum</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <span class="pricing-badge">Pro</span>
+                        <div class="pricing-price">45 <span>lei/lună</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tot din Popular</li>
+                        <li>✓ Nutritionist AI</li>
+                        <li>✓ Comision 0% pe comenzi</li>
+                        <li>✓ Suport prioritar</li>
+                    </ul>
+                    <button class="btn btn-outline btn-block">Contactează-ne</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-icon">🍽️</span>
+                <span class="logo-text">Rețete<span class="logo-accent">Smart</span></span>
+                <p class="footer-tagline">Mâncarea perfectă, zilnic</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Despre</a>
+                <a href="#">Contact</a>
+                <a href="#">Termeni</a>
+                <a href="#">Confidențialitate</a>
+            </div>
+            <p class="footer-copy">© 2026 RețeteSmart. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
